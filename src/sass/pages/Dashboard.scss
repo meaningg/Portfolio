@@ -1,0 +1,147 @@
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(32, 32, 32);
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(97, 97, 97);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(143, 143, 143);
+}
+
+.dashboard__body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  .pre__header {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100px;
+    background-color: rgb(31, 31, 31);
+  }
+  .header {
+    flex-shrink: 0;
+    padding: 30px 0px 30px;
+    background-color: #005e61;
+    background: url("../../source/Wavey-Fingerprint.svg");
+    width: 100%;
+    height: 40vh;
+    -webkit-box-shadow: 5px 5px 24px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: 5px 5px 24px 5px rgba(0, 0, 0, 0.25);
+    z-index: 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    .title {
+      background-color: rgba(32, 32, 32, 0.836);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 150px;
+      width: 150px;
+      clip-path: circle(50% at 50% 50%);
+
+      .name {
+        font-size: 26pt;
+        font-weight: 600;
+        color: white;
+      }
+      .subname {
+        color: white;
+        text-align: center;
+      }
+    }
+    .button {
+      width: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      a {
+        text-decoration: none;
+      }
+      button {
+        cursor: pointer;
+        border: none;
+        width: 150px;
+        height: 40px;
+        border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10%;
+        padding: 30px;
+        font-size: 12pt;
+        transition: 0.2s;
+        &:hover {
+          transform: scale(1.1);
+          -webkit-box-shadow: 5px 5px 19px 5px rgba(0, 0, 0, 0.26);
+          box-shadow: 5px 5px 19px 5px rgba(0, 0, 0, 0.26);
+        }
+      }
+    }
+  }
+  .body {
+    width: 100%;
+    height: auto;
+    flex-grow: 1;
+    background-color: rgb(31, 31, 31);
+    display: flex;
+    flex-direction: column;
+    .title {
+      color: white;
+      padding: 50px;
+      display: flex;
+      justify-content: center;
+      font-size: 24pt;
+    }
+    .projects__row {
+      width: auto;
+      height: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      .project__item {
+        width: 50%;
+        min-width: 300px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        .title {
+          font-size: 14pt;
+        }
+      }
+    }
+  }
+  .footer {
+    width: 100%;
+    flex-shrink: 0;
+    height: 200px;
+    background-color: rgb(15, 67, 68);
+    -webkit-box-shadow: 5px 5px 19px 5px rgba(0, 0, 0, 0.26);
+    box-shadow: 5px 5px 19px 5px rgba(0, 0, 0, 0.26);
+  }
+}
+// .header {
+
+// }
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
