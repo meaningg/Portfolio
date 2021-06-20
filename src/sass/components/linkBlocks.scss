@@ -10,8 +10,8 @@
   .links__block {
     height: 250px;
     width: 250px;
-    background-color: rgba(255, 255, 255, 0.678);
-    border-radius: 4px;
+    background-color: white;
+    border-radius: 10px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -20,6 +20,10 @@
     &:hover {
       background-color: rgb(255, 255, 255);
       transform: translateY(-10px);
+
+      .name__link {
+        text-decoration: underline;
+      }
     }
     .name__link {
       text-decoration: none;
@@ -37,7 +41,7 @@
       height: 180px;
       width: 100%;
       object-fit: cover;
-      border-radius: 14px;
+      border-radius: 7px;
       -webkit-box-shadow: 5px 5px 19px 5px rgba(0, 0, 0, 0.26);
       box-shadow: 5px 5px 19px 5px rgba(0, 0, 0, 0.26);
     }
