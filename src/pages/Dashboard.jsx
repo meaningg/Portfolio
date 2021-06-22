@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../sass/pages/Dashboard.scss";
-import firebaseConfig from "../components/config.js";
+
 import firebase from "firebase";
 import Loader from "../components/Loader";
 import LinkBlocks from "../components/LinkBlocks";
