@@ -2,28 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import "../sass/pages/comments.scss";
 import { CSSTransition } from "react-transition-group";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faLocationArrow,
-  faSun,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import "firebase/analytics";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import firebaseConfig from "../components/config";
-import {
-  faCheckCircle,
-  faHandLizard,
-  faPaperPlane,
-} from "@fortawesome/free-regular-svg-icons";
-
+import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
 const auth = firebase.auth();
 const db = firebase.firestore();
-const analytics = firebase.analytics();
 
 function CommentsTest() {
   const [user] = useAuthState(auth);
@@ -69,18 +58,14 @@ function Comsproj() {
       setCommentInput(false);
     }
   };
+
   return (
     <div className="comments__body">
       <SignOut />
       <div className="post">
         <div className="post__content noselect">some post</div>
         <div className="post__buttons">
-          <div className="likebtn noselect">
-            <div className="icon">
-              <FontAwesomeIcon icon={faHeart} />
-            </div>
-            <div className="count">0</div>
-          </div>
+          <Likes />
           <div
             onClick={() => {
               handeInput();
@@ -118,6 +103,70 @@ function Comsproj() {
   );
 }
 
+function Likes() {
+  const [likesSize, setLikesSize] = useState(null);
+  const [isLiked, setIsLiked] = useState(false);
+  const [user] = useAuthState(auth);
+  const [likesList, setLikesList] = useState([]);
+  // getting likes count
+  useEffect(() => {
+    const db = firebaseConfig.firestore();
+    return db.collection("likes").onSnapshot((snap) => {
+      const likesData = [];
+      snap.forEach((doc) => likesData.push({ ...doc.data(), id: doc.id }));
+      setLikesSize(snap.size);
+      setLikesList(likesData);
+      console.log(likesList);
+    });
+  }, []);
+  // getting like state
+  useEffect(() => {
+    const db = firebaseConfig.firestore();
+    return db
+      .collection("likes")
+      .where(firebase.firestore.FieldPath.documentId(), "==", user.uid)
+      .onSnapshot((snapshot) => {
+        setIsLiked(snapshot.empty);
+      });
+  }, []);
+
+  // handle like state
+  const handleLike = () => {
+    if (isLiked === false) {
+      db.collection("likes")
+        .doc(user.uid)
+        .delete()
+        .then(() => {
+          console.log("Document successfully deleted!");
+        })
+        .catch((error) => {
+          console.error("Error removing document: ", error);
+        });
+    } else {
+      db.collection("likes").doc(user.uid).set({
+        isLiked: true,
+      });
+    }
+  };
+
+  return (
+    <div className="likebtn noselect">
+      <div
+        onClick={() => {
+          handleLike();
+        }}
+        className={isLiked ? "icon" : "icon liked"}
+      >
+        <FontAwesomeIcon icon={faHeart} />
+      </div>
+
+      <div type="primary" className="count">
+        {likesSize}
+      </div>
+    </div>
+  );
+}
+
 function Comments() {
   const [comments, setComments] = useState([]);
 
@@ -137,12 +186,7 @@ function Comments() {
     <div className="comments">
       {comments.map((doc) => (
         <div key={doc.id} className="comment">
-          <UserInfo
-            userImg={doc.authImg}
-            date={doc.date}
-            userName={doc.authName}
-            uid={doc.uid}
-          />
+          <UserInfo date={doc.date} uid={doc.uid} />
           <div className="text">{doc.text}</div>
         </div>
       ))}
@@ -150,7 +194,7 @@ function Comments() {
   );
 }
 
-function UserInfo({ userImg, userName, date, uid }) {
+function UserInfo({ date, uid }) {
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {

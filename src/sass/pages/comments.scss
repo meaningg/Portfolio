@@ -49,6 +49,16 @@
             color: rgb(255, 154, 154);
             transition: 0.2s;
           }
+          &.liked {
+            font-size: 20pt;
+            color: rgb(255, 94, 94);
+            &:hover {
+              color: rgb(255, 154, 154);
+              transition: 0.2s;
+            }
+          }
+        }
+        .count {
         }
       }
       .commentbtn {
@@ -260,5 +270,10 @@
   &:hover {
     background-color: rgb(180, 180, 180);
     color: rgb(73, 73, 73);
+  }
+}
+.popover {
+  ul {
+    list-style-type: none;
   }
 }
