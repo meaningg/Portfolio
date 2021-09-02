@@ -11,6 +11,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import firebaseConfig from "../components/config";
 import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
+
 const auth = firebase.auth();
 const db = firebase.firestore();
 
@@ -162,7 +163,47 @@ function Likes() {
 
       <div type="primary" className="count">
         {likesSize}
+        <div className="likes__list">
+          <ul>
+            <li>
+              {likesList.slice(0, 5).map((doc) => (
+                <div>
+                  <LikesUserInfo uid={doc.id} />
+                </div>
+              ))}
+            </li>
+          </ul>
+        </div>
       </div>
+    </div>
+  );
+}
+
+function LikesUserInfo({ uid }) {
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    const db = firebaseConfig.firestore();
+    return db
+      .collection("users")
+      .where("uid", "==", uid)
+      .onSnapshot((snapshot) => {
+        const usrData = [];
+        snapshot.forEach((doc) => usrData.push({ ...doc.data(), id: doc.id }));
+        setUserData(usrData);
+      });
+  }, []);
+
+  return (
+    <div>
+      {userData.map((doc) => (
+        <div key={doc.id} className="user">
+          <div className="img">
+            <img src={doc.img} alt="" />
+          </div>
+          <div className="name">{doc.name}</div>
+        </div>
+      ))}
     </div>
   );
 }
